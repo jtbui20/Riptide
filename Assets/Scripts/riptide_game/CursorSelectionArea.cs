@@ -15,11 +15,14 @@ public class CursorSelectionArea : MonoBehaviour
     public GameObject cursorObject;
     public GameObject lineRendererPrefab;
 
+    CursorLoopLinePooler linePooler;
+
     private float currentDistance;
 
     void Start()
     {
         mainCamera = Camera.main;
+        linePooler = FindAnyObjectByType<CursorLoopLinePooler>();
     }
 
     void Update()
@@ -117,6 +120,7 @@ public class CursorSelectionArea : MonoBehaviour
     void OnMouseUp()
     {
         isDrawing = false;
+        DetachLineRenderer();
     }
 
     bool TryCloseLoop()
@@ -164,6 +168,7 @@ public class CursorSelectionArea : MonoBehaviour
     {
         // Extract the selection area points and store in a list
         ProcessPoints();
+        DetachLineRenderer();
         StartDrawing();
     }
 
@@ -199,15 +204,13 @@ public class CursorSelectionArea : MonoBehaviour
         {
             DetachLineRenderer();
         }
-        currentlyManagedLineRenderer = Instantiate(lineRendererPrefab).GetComponent<LineRenderer>();
+        currentlyManagedLineRenderer = linePooler.CreateNewLineRendererInstance();
     }
 
     public void DetachLineRenderer()
     {
-        if (currentlyManagedLineRenderer != null)
-        {
-            currentlyManagedLineRenderer = null;
-        }
+        linePooler.IsolateCurrentLine(currentlyManagedLineRenderer);
+        currentlyManagedLineRenderer = null;
     }
     #endregion
 }

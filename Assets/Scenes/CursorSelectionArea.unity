@@ -849,15 +849,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570757f687321ef43be8e54c78a2dcb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionSensitivity: 0.2
-  closingSensitivity: 1
-  minimumSteps: 10
-  minimumDistanceToCloseLoop: 2
-  verticalOffset: 0.1
   cursorSettings: {fileID: 11400000, guid: ac5fd3384d62ddc4382fdc4ea1c8b3b9, type: 2}
   cursorObject: {fileID: 1913414426}
   lineRendererPrefab: {fileID: 47417320160151186, guid: e39b34c9a84caf44381b60c9f691528a, type: 3}
-  allowCutLoops: 1
 --- !u!65 &1913414429
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -956,6 +950,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2088000010}
+  - component: {fileID: 2088000011}
   m_Layer: 0
   m_Name: LineRendererPool
   m_TagString: Untagged
@@ -978,6 +973,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2088000011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088000009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe1d2ad4d111f24ba08c033a69cc771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRendererPrefab: {fileID: 2088000009}
 --- !u!1 &2116198337
 GameObject:
   m_ObjectHideFlags: 0

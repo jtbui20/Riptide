@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5026718832059577551}
   - component: {fileID: 7055006784186899891}
+  - component: {fileID: -7542946408371467}
   m_Layer: 0
   m_Name: LineRenderer
   m_TagString: Untagged
@@ -56,7 +57,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -139,3 +140,18 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-7542946408371467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47417320160151186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6070b036313a3c7409897bb436412dc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TrailLingeringTime: 1
+  isSafe: 0
+  shouldRemove: 0
