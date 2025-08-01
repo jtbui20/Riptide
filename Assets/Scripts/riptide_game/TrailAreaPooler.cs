@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class CursorLoopLinePooler : MonoBehaviour
@@ -12,7 +13,7 @@ public class CursorLoopLinePooler : MonoBehaviour
 
     void Update()
     {
-        List<TrailAreaBehaviour> linesToRemove = lines.FindAll(line => line.shouldRemove);
+        List<TrailAreaBehaviour> linesToRemove = lines.FindAll(line => line.shouldProcess);
         foreach (TrailAreaBehaviour line in linesToRemove)
         {
             RemoveLine(line);
@@ -26,14 +27,13 @@ public class CursorLoopLinePooler : MonoBehaviour
         return newLine;
     }
 
-    public void IsolateCurrentLine(LineRenderer lineRenderer)
+    public void IsolateCurrentLine(LineRenderer lineRenderer, bool isClosed = false)
     {
         // Grab the behaviour
         TrailAreaBehaviour trailBehaviour = lineRenderer.GetComponent<TrailAreaBehaviour>();
         if (trailBehaviour != null)
         {
-            // Set the trail as confirmed
-            trailBehaviour.IsConfirmed();
+            trailBehaviour.SetConfirmed(isClosed);
         }
     }
 
