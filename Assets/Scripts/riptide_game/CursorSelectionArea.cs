@@ -2,29 +2,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(LineRenderer))]
 public class CursorSelectionArea : MonoBehaviour
 {
-    private LineRenderer lineRenderer;
+    private LineRenderer currentlyManagedLineRenderer;
     private bool isDrawing = false;
     private Vector3 startWorldPos;
     private Camera mainCamera;
 
     private List<Vector3> selectionPath = new List<Vector3>();
 
-    [Header("Cursor Selection Area Settings")]
-    public float selectionSensitivity;
-    public float closingSensitivity;
-    public int minumumSteps;
-    public float verticalOffset;
+    public CursorSettings cursorSettings;
     public GameObject cursorObject;
+    public GameObject lineRendererPrefab;
 
-    List<Vector3> selectionAreaPoints = new List<Vector3>();
+    private float currentDistance;
+
     void Start()
     {
         mainCamera = Camera.main;
-        lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.enabled = false;
     }
 
     void Update()
@@ -39,14 +34,15 @@ public class CursorSelectionArea : MonoBehaviour
         {
             Vector3 mouseWorldPos = GetMouseWorldPositionProjectedToSurface();
             // Only register the point if it is significantly different from the last point
-            if (selectionPath.Count == 0 || Vector3.Distance(mouseWorldPos, selectionPath[selectionPath.Count - 1]) > selectionSensitivity)
+            if (selectionPath.Count == 0 || Vector3.Distance(mouseWorldPos, selectionPath[selectionPath.Count - 1]) > cursorSettings.selectionSensitivity)
             {
                 selectionPath.Add(mouseWorldPos);
-                lineRenderer.positionCount = selectionPath.Count;
-                lineRenderer.SetPositions(selectionPath.ToArray());
-                lineRenderer.enabled = true;
+                currentDistance += Vector3.Distance(mouseWorldPos, startWorldPos);
+                UpdateLineRendererPositions();
 
-                if (TryCloseLoop())
+                bool isClosedLoop = cursorSettings.allowCutLoops ? TryCloseLoopAtAnyPoint() : TryCloseLoop();
+
+                if (isClosedLoop)
                 {
                     ConfirmSelectionLoop();
                 }
@@ -59,7 +55,7 @@ public class CursorSelectionArea : MonoBehaviour
         if (cursorObject != null)
         {
             Vector3 mouseWorldPos = GetMouseWorldPositionProjectedToSurface();
-            cursorObject.transform.position = new Vector3(mouseWorldPos.x, mouseWorldPos.y + verticalOffset, mouseWorldPos.z);
+            cursorObject.transform.position = new Vector3(mouseWorldPos.x, mouseWorldPos.y + cursorSettings.verticalOffset, mouseWorldPos.z);
         }
     }
 
@@ -70,6 +66,11 @@ public class CursorSelectionArea : MonoBehaviour
             if (isPointInSelectionArea(selectable.transform.position))
             {
                 Debug.Log("Object selected: " + selectable.name);
+                SelectableObjectBehaviour selectableBehaviour = selectable.GetComponent<SelectableObjectBehaviour>();
+                if (selectableBehaviour != null)
+                {
+                    selectableBehaviour.OnSelected();
+                }
             }
         }
     }
@@ -120,13 +121,33 @@ public class CursorSelectionArea : MonoBehaviour
 
     bool TryCloseLoop()
     {
-        // Check if the previous point is close enough to the first point to close the loop
-        if (selectionPath.Count > minumumSteps && Vector3.Distance(selectionPath[0], selectionPath[selectionPath.Count - 1]) <= closingSensitivity)
+        if (selectionPath.Count < cursorSettings.minimumSteps) return false;
+        if (currentDistance < cursorSettings.minimumDistanceToCloseLoop) return false;
+
+        if (Vector3.Distance(selectionPath[0], selectionPath[^1]) <= cursorSettings.closingSensitivity)
         {
             selectionPath.Add(selectionPath[0]); // Close the loop by adding the first point again
-            lineRenderer.positionCount = selectionPath.Count;
-            lineRenderer.SetPositions(selectionPath.ToArray());
+            UpdateLineRendererPositions();
             return true;
+        }
+        return false;
+    }
+
+    bool TryCloseLoopAtAnyPoint()
+    {
+        if (selectionPath.Count < cursorSettings.minimumSteps) return false;
+        if (currentDistance < cursorSettings.minimumDistanceToCloseLoop) return false;
+
+        for (int i = 0; i < selectionPath.Count - cursorSettings.minimumSteps; i++)
+        {
+            if (Vector3.Distance(selectionPath[i], selectionPath[^1]) <= cursorSettings.closingSensitivity)
+            {
+                // Delete everything before this point
+                selectionPath.RemoveRange(0, i);
+                selectionPath.Add(selectionPath[0]); // Close the loop by adding the first point again
+                UpdateLineRendererPositions();
+                return true;
+            }
         }
         return false;
     }
@@ -136,12 +157,12 @@ public class CursorSelectionArea : MonoBehaviour
         startWorldPos = GetMouseWorldPositionProjectedToSurface();
         selectionPath.Clear();
         selectionPath.Add(startWorldPos);
+        currentDistance = 0f;
     }
 
     void ConfirmSelectionLoop()
     {
         // Extract the selection area points and store in a list
-        selectionAreaPoints = new List<Vector3>(selectionPath);
         ProcessPoints();
         StartDrawing();
     }
@@ -158,4 +179,35 @@ public class CursorSelectionArea : MonoBehaviour
 
         return Vector3.zero; // Return zero if no hit detected
     }
+
+    #region Line Methods
+    public void UpdateLineRendererPositions()
+    {
+        if (!isDrawing) return;
+        if (currentlyManagedLineRenderer == null)
+        {
+            CreateNewLineRenderer();
+        }
+        currentlyManagedLineRenderer.enabled = true;
+        currentlyManagedLineRenderer.positionCount = selectionPath.Count;
+        currentlyManagedLineRenderer.SetPositions(selectionPath.ToArray());
+    }
+
+    public void CreateNewLineRenderer()
+    {
+        if (currentlyManagedLineRenderer != null)
+        {
+            DetachLineRenderer();
+        }
+        currentlyManagedLineRenderer = Instantiate(lineRendererPrefab).GetComponent<LineRenderer>();
+    }
+
+    public void DetachLineRenderer()
+    {
+        if (currentlyManagedLineRenderer != null)
+        {
+            currentlyManagedLineRenderer = null;
+        }
+    }
+    #endregion
 }
