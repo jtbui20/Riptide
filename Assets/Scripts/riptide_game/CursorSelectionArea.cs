@@ -11,7 +11,7 @@ public class CursorSelectionArea : MonoBehaviour
 
     private List<Vector3> selectionPath = new List<Vector3>();
 
-    public CursorSettings cursorSettings;
+    public TrailAreaSettings cursorSettings;
     public GameObject cursorObject;
     public GameObject lineRendererPrefab;
 

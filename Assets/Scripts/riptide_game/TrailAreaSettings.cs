@@ -2,8 +2,8 @@ using System;
 using UnityEngine;
 
 [Serializable]
-[CreateAssetMenu(fileName = "New Cursor Settings", menuName = "Riptide/CursorSettings", order = 1)]
-public class CursorSettings : ScriptableObject
+[CreateAssetMenu(fileName = "New Trail Area Settings", menuName = "Riptide/TrailAreaSettings", order = 1)]
+public class TrailAreaSettings : ScriptableObject
 {
     [Header("Cursor Selection Area Settings")]
     public float selectionSensitivity;
