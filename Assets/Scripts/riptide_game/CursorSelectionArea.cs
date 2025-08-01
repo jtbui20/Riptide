@@ -10,15 +10,14 @@ public class CursorSelectionArea : MonoBehaviour
     private Vector3 startWorldPos;
     private Camera mainCamera;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
     private List<Vector3> selectionPath = new List<Vector3>();
 
     [Header("Cursor Selection Area Settings")]
-    public float selectionSensitivity; // Distance threshold to consider a point in the selection area
-    public float closingSensitivity; // Distance threshold to close the selection area
+    public float selectionSensitivity;
+    public float closingSensitivity;
     public int minumumSteps;
-    public float verticalOffset; // Offset to project the selection area vertically
+    public float verticalOffset;
+    public GameObject cursorObject;
 
     List<Vector3> selectionAreaPoints = new List<Vector3>();
     void Start()
@@ -29,6 +28,12 @@ public class CursorSelectionArea : MonoBehaviour
     }
 
     void Update()
+    {
+        HandleLineDrawing();
+        MoveCursorObject();
+    }
+
+    void HandleLineDrawing()
     {
         if (isDrawing)
         {
@@ -41,7 +46,6 @@ public class CursorSelectionArea : MonoBehaviour
                 lineRenderer.SetPositions(selectionPath.ToArray());
                 lineRenderer.enabled = true;
 
-
                 if (TryCloseLoop())
                 {
                     ConfirmSelectionLoop();
@@ -50,15 +54,21 @@ public class CursorSelectionArea : MonoBehaviour
         }
     }
 
+    void MoveCursorObject()
+    {
+        if (cursorObject != null)
+        {
+            Vector3 mouseWorldPos = GetMouseWorldPositionProjectedToSurface();
+            cursorObject.transform.position = new Vector3(mouseWorldPos.x, mouseWorldPos.y + verticalOffset, mouseWorldPos.z);
+        }
+    }
+
     void ProcessPoints()
     {
-        // Iterate over all objects with tag "Selectable"
         foreach (GameObject selectable in GameObject.FindGameObjectsWithTag("Selectable"))
         {
-            // Check if the object is within the selection area
             if (isPointInSelectionArea(selectable.transform.position))
             {
-                // Perform the desired action on the selectable object
                 Debug.Log("Object selected: " + selectable.name);
             }
         }
@@ -66,38 +76,35 @@ public class CursorSelectionArea : MonoBehaviour
 
     bool isPointInSelectionArea(Vector3 point)
     {
+        // Use Ray casting algorithm to determine if the point is inside the polygon defined by selectionPath
         int intersections = 0;
-        Vector3 rayStart = new Vector2(point.x, point.z);
+        Vector3 rayStart = new Vector2(point.x, point.z - 1000f);
         Vector3 rayEnd = new Vector2(point.x, point.z + 1000f);
-        Ray ray = new Ray(rayStart, rayEnd - rayStart);
-
         for (int i = 0; i < selectionPath.Count - 1; i++)
         {
             Vector3 segmentStart = new Vector2(selectionPath[i].x, selectionPath[i].z);
             Vector3 segmentEnd = new Vector2(selectionPath[i + 1].x, selectionPath[i + 1].z);
-            if (LineIntersectsRay(segmentStart, segmentEnd, ray))
+            if (TwoLinesIntersect(segmentStart, segmentEnd, rayStart, rayEnd))
             {
                 intersections++;
             }
         }
-
         Debug.Log("Intersections: " + intersections + " for point: " + point);
-        // If the number of intersections is odd, the point is inside the polygon
+        if (intersections == 0) return false;
+        // If the number of intersections is even, the point is inside the polygon
         return intersections % 2 == 0;
     }
 
-    bool LineIntersectsRay(Vector3 lineStart, Vector3 lineEnd, Ray ray)
+    bool TwoLinesIntersect(Vector2 line1Start, Vector2 line1End, Vector2 line2Start, Vector2 line2End)
     {
-        Vector3 lineDirection = lineEnd - lineStart;
-        Vector3 rayDirection = ray.direction;
-        Vector3 rayOrigin = ray.origin;
-        Vector3 lineToRay = rayOrigin - lineStart;
-        float crossProduct = Vector3.Cross(lineDirection, rayDirection).magnitude;
-        if (crossProduct < 0.0001f) return false; // Lines are parallel
-        float t = Vector3.Cross(lineToRay, rayDirection).magnitude / crossProduct;
-        if (t < 0 || t > 1) return false; // Intersection is outside the line segment
-        float u = Vector3.Cross(lineToRay, lineDirection).magnitude / crossProduct;
-        return u >= 0 && u <= 1; // Intersection is within the ray
+        float denominator = (line1End.x - line1Start.x) * (line2End.y - line2Start.y) - (line1End.y - line1Start.y) * (line2End.x - line2Start.x);
+        if (Mathf.Approximately(denominator, 0f))
+            return false; // Lines are parallel
+
+        float ua = ((line2End.x - line2Start.x) * (line1Start.y - line2Start.y) - (line2End.y - line2Start.y) * (line1Start.x - line2Start.x)) / denominator;
+        float ub = ((line1End.x - line1Start.x) * (line1Start.y - line2Start.y) - (line1End.y - line1Start.y) * (line1Start.x - line2Start.x)) / denominator;
+
+        return ua >= 0f && ua <= 1f && ub >= 0f && ub <= 1f;
     }
 
     void OnMouseDown()
