@@ -22,6 +22,7 @@ public class CursorLoopLinePooler : MonoBehaviour
             {
                 foreach (GameObject obj in line.objectsInside)
                 {
+                    if (obj == null) continue; // Skip if the object is null
                     SelectableObjectBehaviour selectableBehaviour = obj.GetComponent<SelectableObjectBehaviour>();
                     if (selectableBehaviour != null)
                     {

@@ -4,9 +4,21 @@ public class AreaScenarioController : MonoBehaviour
 {
     // This is the class that the timeline will be calling stuff to
     public JeepMovementLogic jeepObject;
+    public CursorSelectionArea cursorObject;
+    public StaticCreaturesManager creatureManager;
+    public StartingUI startingUI;
+
+    public IsolatedStopwatch stopwatch;
+
+    void Start()
+    {
+        startingUI.onStartGame += StartGame;
+        stopwatch = new();
+    }
 
     public void MoveCharacterToPosition()
     {
+
     }
 
     public void SpawnCreaturesSequentially()
@@ -26,9 +38,12 @@ public class AreaScenarioController : MonoBehaviour
 
     public void StartGame()
     {
-        // Turn on player controls
-        // Turn on creature behaviours
+        cursorObject.EnableCursor();
+
+        creatureManager.EnableCreatures();
+
         // Turn on the stop watch
+        stopwatch.Start();
     }
 
     public void PauseGame()
@@ -50,4 +65,10 @@ public class AreaScenarioController : MonoBehaviour
     {
 
     }
+
+
+    #region Event Invokers
+
+
+    #endregion
 }

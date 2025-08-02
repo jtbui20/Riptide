@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,6 +21,8 @@ public class CursorSelectionArea : MonoBehaviour
 
     private float currentDistance;
     private Rigidbody rb;
+    [SerializeField]
+    private bool isCursorEnabled = false;
 
     void Start()
     {
@@ -28,8 +31,19 @@ public class CursorSelectionArea : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    public void EnableCursor()
+    {
+        isCursorEnabled = true;
+    }
+
+    public void DisableCursor()
+    {
+        isCursorEnabled = false;
+    }
+
     void Update()
     {
+        if (!isCursorEnabled) return;
         HandleLineDrawing();
         MoveCursorObject();
     }
@@ -62,7 +76,6 @@ public class CursorSelectionArea : MonoBehaviour
         {
             Vector3 mouseWorldPos = GetMouseWorldPositionProjectedToSurface();
             rb.MovePosition(new Vector3(mouseWorldPos.x, mouseWorldPos.y + cursorSettings.verticalOffset + 1f, mouseWorldPos.z));
-
         }
     }
 
@@ -79,12 +92,14 @@ public class CursorSelectionArea : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (!isCursorEnabled) return;
         isDrawing = true;
         StartDrawing();
     }
 
     void OnMouseUp()
     {
+        if (!isCursorEnabled || !isDrawing) return;
         isDrawing = false;
         DetachLineRenderer(false);
     }
