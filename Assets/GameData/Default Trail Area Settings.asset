@@ -17,3 +17,7 @@ MonoBehaviour:
   minimumSteps: 10
   minimumDistanceToCloseLoop: 2
   verticalOffset: 0.1
+  allowCutLoops: 1
+  disrutpableLayers:
+    serializedVersion: 2
+    m_Bits: 2560

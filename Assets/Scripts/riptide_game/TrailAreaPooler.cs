@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 public class CursorLoopLinePooler : MonoBehaviour
@@ -7,15 +6,37 @@ public class CursorLoopLinePooler : MonoBehaviour
     public GameObject lineRendererPrefab;
     List<TrailAreaBehaviour> lines = new List<TrailAreaBehaviour>();
 
+    StaticCreaturesManager staticCreaturesManager;
+
     void Start()
     {
+        staticCreaturesManager = FindAnyObjectByType<StaticCreaturesManager>();
     }
 
     void Update()
     {
-        List<TrailAreaBehaviour> linesToRemove = lines.FindAll(line => line.shouldProcess);
-        foreach (TrailAreaBehaviour line in linesToRemove)
+        List<TrailAreaBehaviour> linesToProcess = lines.FindAll(line => line.shouldProcess);
+        foreach (TrailAreaBehaviour line in linesToProcess)
         {
+            if (line.isSafe && line.shouldProcess)
+            {
+                foreach (GameObject obj in line.objectsInside)
+                {
+                    SelectableObjectBehaviour selectableBehaviour = obj.GetComponent<SelectableObjectBehaviour>();
+                    if (selectableBehaviour != null)
+                    {
+                        if (obj.TryGetComponent(out BasicCreatureBehaviour creatureBehaviour))
+                        {
+                            staticCreaturesManager.CapturedCreature(creatureBehaviour);
+                        }
+                        else if (obj.TryGetComponent(out JeepMovementLogic vehicleBehaviour))
+                        {
+                            // Do something with the vehicle
+                        }
+                    }
+                }
+                Debug.Log("Collected " + line.objectsInside.Count + " objects inside the trail area.");
+            }
             RemoveLine(line);
         }
     }

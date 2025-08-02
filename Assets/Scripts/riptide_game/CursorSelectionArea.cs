@@ -15,14 +15,17 @@ public class CursorSelectionArea : MonoBehaviour
     public GameObject cursorObject;
     public GameObject lineRendererPrefab;
 
+
     CursorLoopLinePooler linePooler;
 
     private float currentDistance;
+    private Rigidbody rb;
 
     void Start()
     {
         mainCamera = Camera.main;
         linePooler = FindAnyObjectByType<CursorLoopLinePooler>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -58,7 +61,19 @@ public class CursorSelectionArea : MonoBehaviour
         if (cursorObject != null)
         {
             Vector3 mouseWorldPos = GetMouseWorldPositionProjectedToSurface();
-            cursorObject.transform.position = new Vector3(mouseWorldPos.x, mouseWorldPos.y + cursorSettings.verticalOffset, mouseWorldPos.z);
+            rb.MovePosition(new Vector3(mouseWorldPos.x, mouseWorldPos.y + cursorSettings.verticalOffset + 1f, mouseWorldPos.z));
+
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        GameObject collidedObject = collision.gameObject;
+        Debug.Log("Collision with: " + collidedObject.name);
+        // Check if the collided object is in the disruptable layers
+        if ((collidedObject.layer & (1 << cursorSettings.disrutpableLayers)) != 0)
+        {
+            OnMouseUp();
         }
     }
 
@@ -117,7 +132,6 @@ public class CursorSelectionArea : MonoBehaviour
 
     void ConfirmSelectionLoop()
     {
-        // Extract the selection area points and store in a list
         DetachLineRenderer(true);
         StartDrawing();
     }
@@ -132,7 +146,7 @@ public class CursorSelectionArea : MonoBehaviour
             return hit.point;
         }
 
-        return Vector3.zero; // Return zero if no hit detected
+        return Vector3.zero;
     }
 
     #region Line Methods
@@ -159,6 +173,7 @@ public class CursorSelectionArea : MonoBehaviour
 
     public void DetachLineRenderer(bool isClosed)
     {
+        if (currentlyManagedLineRenderer == null) return;
         linePooler.IsolateCurrentLine(currentlyManagedLineRenderer, isClosed);
         currentlyManagedLineRenderer = null;
     }

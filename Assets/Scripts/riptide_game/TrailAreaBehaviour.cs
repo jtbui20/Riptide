@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 public class TrailAreaBehaviour : MonoBehaviour
@@ -11,7 +12,7 @@ public class TrailAreaBehaviour : MonoBehaviour
     public bool isSafe = false;
     public bool shouldProcess = false;
 
-    public GameObject objectsInside;
+    public List<GameObject> objectsInside;
 
     void Start()
     {
@@ -24,7 +25,7 @@ public class TrailAreaBehaviour : MonoBehaviour
         // Find if any objects are contained inside the trail area
         if (isClosed)
         {
-            FindObjectsInArea();
+            objectsInside = FindObjectsInArea();
             SetClosed();
         }
         else
@@ -34,20 +35,18 @@ public class TrailAreaBehaviour : MonoBehaviour
         StartCoroutine(LingeringTimer());
     }
 
-    void FindObjectsInArea()
+    List<GameObject> FindObjectsInArea()
     {
+        List<GameObject> foundObjects = new List<GameObject>();
         foreach (GameObject selectable in GameObject.FindGameObjectsWithTag("Selectable"))
         {
             if (isPointInSelectionArea(selectable.transform.position))
             {
-                Debug.Log("Object selected: " + selectable.name);
-                SelectableObjectBehaviour selectableBehaviour = selectable.GetComponent<SelectableObjectBehaviour>();
-                if (selectableBehaviour != null)
-                {
-                    selectableBehaviour.OnSelected();
-                }
+                foundObjects.Add(selectable);
             }
         }
+
+        return foundObjects;
     }
 
     bool isPointInSelectionArea(Vector3 point)
@@ -65,7 +64,7 @@ public class TrailAreaBehaviour : MonoBehaviour
                 intersections++;
             }
         }
-        Debug.Log("Intersections: " + intersections + " for point: " + point);
+        // Debug.Log("Intersections: " + intersections + " for point: " + point);
         if (intersections == 0) return false;
         // If the number of intersections is even, the point is inside the polygon
         return intersections % 2 == 0;
@@ -91,7 +90,37 @@ public class TrailAreaBehaviour : MonoBehaviour
 
     void Update()
     {
-        // Custom physics behaviour to check if an object has collided with the trail area
+        if (shouldProcess) HandleObjectMovementAcrossTrail();
+    }
+
+    void HandleObjectMovementAcrossTrail()
+    {
+        List<GameObject> newFrameObjects = FindObjectsInArea();
+        // Rare occurance
+        if (newFrameObjects.Count == objectsInside.Count) return;
+
+        List<GameObject> objectsThatHavePassedTrail = new List<GameObject>();
+
+        foreach (GameObject obj in objectsInside)
+        {
+            // Check if the object is still inside the trail area
+            if (!newFrameObjects.Contains(obj))
+            {
+                // Object has left the trail area
+                objectsThatHavePassedTrail.Add(obj);
+            }
+        }
+
+        foreach (GameObject obj in newFrameObjects)
+        {
+            if (!objectsInside.Contains(obj))
+            {
+                // Object has entered the trail area
+                objectsThatHavePassedTrail.Add(obj);
+            }
+        }
+
+        if (objectsThatHavePassedTrail.Count > 0) SetBroken();
 
     }
 

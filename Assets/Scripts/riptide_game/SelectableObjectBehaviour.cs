@@ -4,19 +4,13 @@ public class SelectableObjectBehaviour : MonoBehaviour
 {
     public int timesNeededToBeSelected = 5;
     public int timesCurrentlySelected = 0;
-    void Start()
-    {
 
-    }
-    void Update()
-    {
-
-    }
+    public bool isFullySelected => timesCurrentlySelected >= timesNeededToBeSelected;
 
     public void OnSelected()
     {
         timesCurrentlySelected++;
-        if (timesCurrentlySelected >= timesNeededToBeSelected)
+        if (isFullySelected)
         {
             Debug.Log("Object fully selected: " + gameObject.name);
         }
