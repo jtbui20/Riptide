@@ -10,6 +10,7 @@ public class StaticCreaturesManager : MonoBehaviour
     public bool AreAllCreaturesCaptured => allCreatures.Count == 0;
 
     public event System.Action<int, int> OnCreatureCaptured;
+    public event System.Action OnAllCreaturesCaptured;
     public void Start()
     {
         TryGetAllCreatures();
@@ -60,7 +61,7 @@ public class StaticCreaturesManager : MonoBehaviour
             }
             if (allCreatures.Count == 0)
             {
-                Debug.Log("All creatures have been captured.");
+                OnAllCreaturesCaptured?.Invoke();
             }
         }
     }

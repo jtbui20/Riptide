@@ -2,15 +2,15 @@ public class IsolatedStopwatch
 {
     private float elapsedTime;
 
-    private bool isRunning;
-
-    private bool isPaused;
+    public bool isRunning { get; private set; }
+    public bool isPaused { get; private set; }
 
     public void Start()
     {
         if (isRunning) return;
         Reset();
         isRunning = true;
+        isPaused = false;
     }
 
     public void Resume()
@@ -27,6 +27,7 @@ public class IsolatedStopwatch
     public void Stop()
     {
         isRunning = false;
+        isPaused = true;
     }
 
     public void Reset()

@@ -13,7 +13,17 @@ public class AreaScenarioController : MonoBehaviour
     void Start()
     {
         startingUI.onStartGame += StartGame;
+        creatureManager.OnAllCreaturesCaptured += FinishScenario_Success;
         stopwatch = new();
+    }
+
+    void Update()
+    {
+        if (stopwatch.isRunning)
+        {
+            stopwatch.DoTick(Time.deltaTime);
+            startingUI.UpdateTimer(stopwatch.GetTimeElapsed());
+        }
     }
 
     public void MoveCharacterToPosition()
@@ -58,12 +68,12 @@ public class AreaScenarioController : MonoBehaviour
 
     public void FinishScenario_Success()
     {
-
+        ShowScenarioSummary();
     }
 
     public void ShowScenarioSummary()
     {
-
+        startingUI.ShowSummaryScreen();
     }
 
 

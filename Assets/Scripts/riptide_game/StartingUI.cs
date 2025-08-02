@@ -12,6 +12,9 @@ public class StartingUI : MonoBehaviour
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI creatureCountText;
+
+    [Header("Summary UI")]
+    public GameObject summaryPanel;
     public AudioSource bgm;
 
     public event System.Action onStartGame;
@@ -64,9 +67,10 @@ public class StartingUI : MonoBehaviour
         onStartGame?.Invoke();
     }
 
-    void UpdateTimer(float time)
+    public void UpdateTimer(float time)
     {
-        timerText.text = "Time: " + time.ToString("F2") + "s";
+        // Shwo time in seconds
+        timerText.text = "Time: " + Mathf.FloorToInt(time) + "s";
     }
 
     void UpdateScore(int score)
@@ -77,5 +81,16 @@ public class StartingUI : MonoBehaviour
     void UpdateCreatureCount(int current, int max)
     {
         creatureCountText.text = "Creatures: " + current + "/" + max;
+    }
+
+    public void ShowSummaryScreen()
+    {
+        // Hide the gameplay UI
+        timerText.gameObject.SetActive(false);
+        // scoreText.gameObject.SetActive(false);
+        creatureCountText.gameObject.SetActive(false);
+
+        // Show the summary screen
+        summaryPanel.SetActive(true);
     }
 }
