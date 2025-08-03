@@ -73,7 +73,7 @@ public class StartingUI : MonoBehaviour
         timerText.text = "Time: " + Mathf.FloorToInt(time) + "s";
     }
 
-    void UpdateScore(int score)
+    public void UpdateScore(int score)
     {
         scoreText.text = "Score: " + score;
     }

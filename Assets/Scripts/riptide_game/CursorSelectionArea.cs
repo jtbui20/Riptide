@@ -15,7 +15,6 @@ public class CursorSelectionArea : MonoBehaviour
     public TrailAreaSettings cursorSettings;
     public GameObject lineRendererPrefab;
 
-
     CursorLoopLinePooler linePooler;
 
     private float currentDistance;

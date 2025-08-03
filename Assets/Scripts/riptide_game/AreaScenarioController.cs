@@ -10,6 +10,7 @@ public class AreaScenarioController : MonoBehaviour
     public StartingUI startingUI;
 
     public IsolatedStopwatch stopwatch;
+    public int currentScore;
 
     void Start()
     {
@@ -90,6 +91,12 @@ public class AreaScenarioController : MonoBehaviour
     public void ShowScenarioSummary()
     {
         startingUI.ShowSummaryScreen();
+    }
+
+    public void AddScore(int scoreToAdd)
+    {
+        currentScore += scoreToAdd;
+        startingUI.UpdateScore(currentScore);
     }
 
 
