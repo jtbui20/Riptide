@@ -12,6 +12,7 @@ public class StartingUI : MonoBehaviour
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI creatureCountText;
+    public TextMeshProUGUI waveCountText;
 
     [Header("Summary UI")]
     [SerializeField]
@@ -19,13 +20,13 @@ public class StartingUI : MonoBehaviour
     public AudioSource bgm;
 
     public event System.Action onStartGame;
-
     public void DoCountdown()
     {
         StaticCreaturesManager creatureManager = FindAnyObjectByType<StaticCreaturesManager>();
         if (creatureManager != null)
         {
             creatureManager.OnCreatureCaptured += UpdateCreatureCount;
+            creatureManager.onWaveUpdated += UpdateWaveCount;
         }
     }
 
@@ -81,6 +82,10 @@ public class StartingUI : MonoBehaviour
     public void UpdateCreatureCount(int current, int max)
     {
         creatureCountText.text = "Creatures: " + current + "/" + max;
+    }
+
+    public void UpdateWaveCount(int newWaveIndex) {
+        waveCountText.text = "Wave: " + (newWaveIndex + 1) + " / 7";
     }
 
     public void ShowSummaryScreen()

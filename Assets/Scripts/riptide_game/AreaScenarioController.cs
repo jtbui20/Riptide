@@ -85,7 +85,7 @@ public class AreaScenarioController : MonoBehaviour
             FinishScenario_Success();
             return;
         }
-        creatureManager.WaveIndex++;
+        creatureManager.IncrementWaveIndex();
         creatureManager.SpawnWave();
         startingUI.UpdateCreatureCount(creatureManager.CreatureCount, creatureManager.MaxCount);
         creatureManager.EnableCreatures();
