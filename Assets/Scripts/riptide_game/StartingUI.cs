@@ -81,11 +81,12 @@ public class StartingUI : MonoBehaviour
 
     public void UpdateCreatureCount(int current, int max)
     {
-        creatureCountText.text = "Creatures: " + current + "/" + max;
+        creatureCountText.text = "Creatures: " + current + " / " + max;
     }
 
-    public void UpdateWaveCount(int newWaveIndex) {
-        waveCountText.text = "Wave: " + (newWaveIndex + 1) + " / 7";
+    public void UpdateWaveCount(int newWaveIndex, int max)
+    {
+        waveCountText.text = "Wave: " + (newWaveIndex + 1) + " / " + max;
     }
 
     public void ShowSummaryScreen()

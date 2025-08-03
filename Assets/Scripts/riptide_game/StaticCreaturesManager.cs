@@ -15,7 +15,7 @@ public class StaticCreaturesManager : MonoBehaviour
     public Collider spawnAreaCollider;
 
     public event System.Action<int, int> OnCreatureCaptured;
-    public event System.Action<int> onWaveUpdated;
+    public event System.Action<int, int> onWaveUpdated;
 
     public event System.Action OnAllCreaturesCaptured;
 
@@ -33,7 +33,7 @@ public class StaticCreaturesManager : MonoBehaviour
     public void IncrementWaveIndex()
     {
         WaveIndex++;
-        onWaveUpdated.Invoke(WaveIndex);
+        onWaveUpdated.Invoke(WaveIndex, SpawnPattern.Count);
     }
 
     public void SpawnWave()
