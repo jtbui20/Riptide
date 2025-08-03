@@ -13,7 +13,6 @@ public class CursorSelectionArea : MonoBehaviour
     private List<Vector3> selectionPath = new List<Vector3>();
 
     public TrailAreaSettings cursorSettings;
-    public GameObject cursorObject;
     public GameObject lineRendererPrefab;
 
 
@@ -72,11 +71,8 @@ public class CursorSelectionArea : MonoBehaviour
 
     void MoveCursorObject()
     {
-        if (cursorObject != null)
-        {
-            Vector3 mouseWorldPos = GetMouseWorldPositionProjectedToSurface();
-            rb.MovePosition(new Vector3(mouseWorldPos.x, mouseWorldPos.y + cursorSettings.verticalOffset + 1f, mouseWorldPos.z));
-        }
+        Vector3 mouseWorldPos = GetMouseWorldPositionProjectedToSurface();
+        rb.MovePosition(new Vector3(mouseWorldPos.x, mouseWorldPos.y + cursorSettings.verticalOffset + 1f, mouseWorldPos.z));
     }
 
     void OnCollisionEnter(Collision collision)
