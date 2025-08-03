@@ -29,6 +29,14 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     public AudioClip loopBrokenClip;
 
+    [SerializeField]
+    public AudioClip buttonPressClip;
+
+    public void TestButtonPress()
+    {
+        PlayAudioClip(buttonPressClip);
+    }
+
     public void PlayAudioClip(AudioClip clip)
     {
         if (clip == null)
@@ -42,6 +50,8 @@ public class AudioManager : MonoBehaviour
         AudioSource audioSource = audioObject.AddComponent<AudioSource>();
         audioSource.clip = clip;
         audioSource.Play();
+
+        // dont destroy on load
 
         // Destroy the AudioSource object after the clip finishes playing
         Object.Destroy(audioObject, clip.length);
