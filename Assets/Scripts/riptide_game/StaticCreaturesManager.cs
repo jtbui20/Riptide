@@ -23,9 +23,9 @@ public class StaticCreaturesManager : MonoBehaviour
     public void Start()
     {
         // TryGetAllCreatures();
-        SpawnWave();
-        TryGetAllCreatures();
-        DisableCreatures();
+        // SpawnWave();
+        // TryGetAllCreatures();
+        // DisableCreatures();
     }
 
     public void SpawnWave()

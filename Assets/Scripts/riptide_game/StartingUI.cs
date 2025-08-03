@@ -19,9 +19,8 @@ public class StartingUI : MonoBehaviour
 
     public event System.Action onStartGame;
 
-    void Start()
+    public void DoCountdown()
     {
-        StartCoroutine(ShowBatchStart());
         StaticCreaturesManager creatureManager = FindAnyObjectByType<StaticCreaturesManager>();
         if (creatureManager != null)
         {

@@ -45,7 +45,7 @@ public class AreaScenarioController : MonoBehaviour
 
     public void StartCountdown()
     {
-
+        startingUI.DoCountdown();
     }
 
     public void StartGame()
@@ -68,6 +68,14 @@ public class AreaScenarioController : MonoBehaviour
     public void ResumeGame()
     {
 
+    }
+
+    public void SpawnFirstWave()
+    {
+        creatureManager.WaveIndex = 0;
+        creatureManager.SpawnWave();
+        startingUI.UpdateCreatureCount(creatureManager.CreatureCount, creatureManager.MaxCount);
+        creatureManager.DisableCreatures();
     }
 
     public void SpawnNextWave()
