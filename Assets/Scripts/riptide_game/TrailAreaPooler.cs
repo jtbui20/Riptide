@@ -79,6 +79,13 @@ public class CursorLoopLinePooler : MonoBehaviour
 
                 // Grab the number of objects inside the line
                 int numberOfObjects = trailBehaviour.objectsInside.Count;
+                // if there are no objects inside, do not add score
+                if (numberOfObjects == 0)
+                {
+                    trailBehaviour.SetConfirmed(false);
+                    AudioManager.Instance.PlayAudioClip(AudioManager.Instance.loopBrokenClip);
+                    return;
+                }
                 AddScore(numberOfObjects);
                 comboCount++;
 
