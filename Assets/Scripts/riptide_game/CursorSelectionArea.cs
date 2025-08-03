@@ -79,8 +79,19 @@ public class CursorSelectionArea : MonoBehaviour
     {
         GameObject collidedObject = collision.gameObject;
         Debug.Log("Collision with: " + collidedObject.name);
-        // Check if the collided object is in the disruptable layers
-        if ((collidedObject.layer & (1 << cursorSettings.disrutpableLayers)) != 0)
+        // Check if the collided object is in the disruptable layers cursorSettings.disrutpableLayers
+        if ((collidedObject.layer & (1 << cursorSettings.disrutpableLayers)) > 0)
+        {
+            OnMouseUp();
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        GameObject triggeredObject = other.gameObject;
+        Debug.Log("Trigger with: " + triggeredObject.name);
+        // Check if the triggered object is in the disruptable layers cursorSettings.disruptableLayers
+        if ((triggeredObject.layer & (1 << cursorSettings.disrutpableLayers)) > 0)
         {
             OnMouseUp();
         }

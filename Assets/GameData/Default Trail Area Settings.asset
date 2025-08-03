@@ -20,4 +20,4 @@ MonoBehaviour:
   allowCutLoops: 1
   disrutpableLayers:
     serializedVersion: 2
-    m_Bits: 2560
+    m_Bits: 512

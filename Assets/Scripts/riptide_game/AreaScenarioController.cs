@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AreaScenarioController : MonoBehaviour
@@ -13,7 +14,7 @@ public class AreaScenarioController : MonoBehaviour
     void Start()
     {
         startingUI.onStartGame += StartGame;
-        creatureManager.OnAllCreaturesCaptured += FinishScenario_Success;
+        creatureManager.OnAllCreaturesCaptured += SpawnNextWave;
         stopwatch = new();
     }
 
@@ -52,6 +53,8 @@ public class AreaScenarioController : MonoBehaviour
 
         creatureManager.EnableCreatures();
 
+        startingUI.UpdateCreatureCount(creatureManager.CreatureCount, creatureManager.MaxCount);
+
         // Turn on the stop watch
         stopwatch.Start();
     }
@@ -64,6 +67,19 @@ public class AreaScenarioController : MonoBehaviour
     public void ResumeGame()
     {
 
+    }
+
+    public void SpawnNextWave()
+    {
+        if (creatureManager.WaveIndex >= creatureManager.SpawnPattern.Count)
+        {
+            FinishScenario_Success();
+            return;
+        }
+        creatureManager.WaveIndex++;
+        creatureManager.SpawnWave();
+        startingUI.UpdateCreatureCount(creatureManager.CreatureCount, creatureManager.MaxCount);
+        creatureManager.EnableCreatures();
     }
 
     public void FinishScenario_Success()
