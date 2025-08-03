@@ -71,7 +71,7 @@ public class CursorSelectionArea : MonoBehaviour
     void MoveCursorObject()
     {
         Vector3 mouseWorldPos = GetMouseWorldPositionProjectedToSurface();
-        rb.MovePosition(new Vector3(mouseWorldPos.x, mouseWorldPos.y + cursorSettings.verticalOffset + 1f, mouseWorldPos.z));
+        rb.MovePosition(new Vector3(mouseWorldPos.x, 5.37f, mouseWorldPos.z));
     }
 
     void OnCollisionEnter(Collision collision)
