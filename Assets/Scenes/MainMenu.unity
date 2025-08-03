@@ -139,6 +139,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5225635831481732786, guid: 25a55ba8748bc49e4aa3cc512ee72326, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8628175355719944470, guid: 25a55ba8748bc49e4aa3cc512ee72326, type: 3}
       propertyPath: m_LocalPosition.x
       value: 26.53
@@ -691,6 +695,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6453011362285434987, guid: 412c4bdd26bb34342adda8e0b786be85, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8628175355719944470, guid: 412c4bdd26bb34342adda8e0b786be85, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.9
@@ -1043,6 +1051,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7776526375432224910, guid: 497041596928e4adfbf119b89f5b0e6d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8628175355719944470, guid: 497041596928e4adfbf119b89f5b0e6d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -26.167667
@@ -1391,7 +1403,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19, y: -229}
+  m_AnchoredPosition: {x: 0, y: -229}
   m_SizeDelta: {x: 300, y: 140.21}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1075658936
@@ -1779,6 +1791,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1973986166393111032, guid: 126bf1b8166ad4443a541145d6a60c1f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3826149422822446248, guid: 126bf1b8166ad4443a541145d6a60c1f, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}

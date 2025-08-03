@@ -53,7 +53,7 @@ public class TrailAreaBehaviour : MonoBehaviour
     {
         // Use Ray casting algorithm to determine if the point is inside the polygon defined by selectionPath
         int intersections = 0;
-        Vector3 rayStart = new Vector2(point.x, point.z - 1000f);
+        Vector3 rayStart = new Vector2(point.x, point.z);
         Vector3 rayEnd = new Vector2(point.x, point.z + 1000f);
         for (int i = 0; i < lineRenderer.positionCount - 1; i++)
         {
@@ -66,8 +66,8 @@ public class TrailAreaBehaviour : MonoBehaviour
         }
         // Debug.Log("Intersections: " + intersections + " for point: " + point);
         if (intersections == 0) return false;
-        // If the number of intersections is even, the point is inside the polygon
-        return intersections % 2 == 0;
+        // If the number of intersections is odd, the point is inside the polygon
+        return intersections % 2 != 0;
     }
 
     bool TwoLinesIntersect(Vector2 line1Start, Vector2 line1End, Vector2 line2Start, Vector2 line2End)
