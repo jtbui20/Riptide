@@ -164,9 +164,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creaturePrefabs:
-  - {fileID: 9008022950858930842, guid: 29cfbd23aa9c58448bf134f598381a25, type: 3}
-  - {fileID: 9008022950858930842, guid: 1499b72af71fb724e99e98db10a9d4c4, type: 3}
-  - {fileID: 9008022950858930842, guid: da9861b0346dae34e9ce282056072447, type: 3}
+  - {fileID: 9008022950858930842, guid: 497041596928e4adfbf119b89f5b0e6d, type: 3}
+  - {fileID: 9008022950858930842, guid: 412c4bdd26bb34342adda8e0b786be85, type: 3}
+  - {fileID: 9008022950858930842, guid: 25a55ba8748bc49e4aa3cc512ee72326, type: 3}
+  - {fileID: 9008022950858930842, guid: 649592954a9c24c9e8195c65a8d604ea, type: 3}
+  - {fileID: 9008022950858930842, guid: 36acf743f6a684d73945a6d890817437, type: 3}
+  - {fileID: 9008022950858930842, guid: 126bf1b8166ad4443a541145d6a60c1f, type: 3}
   MaxCount: 0
   spawnAreaCollider: {fileID: 20048074}
   WaveIndex: 0
@@ -613,6 +616,7 @@ GameObject:
   - component: {fileID: 582737130}
   - component: {fileID: 582737129}
   - component: {fileID: 582737132}
+  - component: {fileID: 582737134}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -637,8 +641,8 @@ Camera:
   m_GameObject: {fileID: 582737128}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -646,7 +650,7 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 50
+  m_FocalLength: 20.78461
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -660,8 +664,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 1.38
-  far clip plane: 10000
-  field of view: 60
+  far clip plane: 500000
+  field of view: 60.000004
   orthographic: 1
   orthographic size: 47.5
   m_Depth: -1
@@ -738,6 +742,28 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!64 &582737134
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582737128}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8164974382771786551, guid: 36a917dca6a234d788ee20feb37fb936, type: 3}
 --- !u!1001 &619177786
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1186,6 +1212,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1287930396
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1287930398}
+  - component: {fileID: 1287930397}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1287930397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287930396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ac41790b75147fa84ac53c9e5905b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  victoryClip: {fileID: 8300000, guid: caae4c1e0feba4871b9b64f48f356e3f, type: 3}
+  pluckClip: {fileID: 8300000, guid: 9fff861783d6841ca8ff046bf3b4b3a9, type: 3}
+--- !u!4 &1287930398
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287930396}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -54.897865, y: -14.636239, z: 0.32558078}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1322423936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1268,20 +1340,20 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.97005576, g: 1, b: 0.7311321, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.05
     m_NormalBias: 0.4
-    m_NearPlane: 0.2
+    m_NearPlane: 0.24
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -1988,10 +2060,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -8721528934608152063, guid: 2db465afb96e10e48b7d6172f0d9fe04, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 43434b34dbe40354699e20a9a03e5dd8, type: 3}
-  m_Resource: {fileID: 8300000, guid: 43434b34dbe40354699e20a9a03e5dd8, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 705b3fd27c3b6e740ac62c1a9e95791c, type: 3}
+  m_Resource: {fileID: 8300000, guid: 705b3fd27c3b6e740ac62c1a9e95791c, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.841
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2934,3 +3006,4 @@ SceneRoots:
   - {fileID: 1266466279}
   - {fileID: 1895629144}
   - {fileID: 20048077}
+  - {fileID: 1287930398}

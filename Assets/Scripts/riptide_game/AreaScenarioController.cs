@@ -85,6 +85,7 @@ public class AreaScenarioController : MonoBehaviour
 
     public void FinishScenario_Success()
     {
+        AudioManager.Instance.PlayAudioClip(AudioManager.Instance.victoryClip);
         ShowScenarioSummary();
     }
 
