@@ -19,7 +19,7 @@ public class StaticCreaturesManager : MonoBehaviour
 
     public int WaveIndex = 0;
 
-    public List<int> SpawnPattern = new List<int> { 1, 1, 2, 2, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7 };
+    public List<int> SpawnPattern = new List<int> { 1, 1, 2, 2, 3, 3, 4 };
     public void Start()
     {
         // TryGetAllCreatures();
@@ -39,12 +39,12 @@ public class StaticCreaturesManager : MonoBehaviour
             // Pick a random location within the spawn area
             Vector3 randomPosition = new Vector3(
                 Random.Range(spawnAreaCollider.bounds.min.x, spawnAreaCollider.bounds.max.x),
-                spawnAreaCollider.bounds.center.y, // Assuming y is the height of the spawn area
+                0, // Assuming y is the height of the spawn area
                 Random.Range(spawnAreaCollider.bounds.min.z, spawnAreaCollider.bounds.max.z)
             );
 
             // Sample to NavMesh to ensure the position is valid
-            if (NavMesh.SamplePosition(randomPosition, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(randomPosition, out NavMeshHit hit, 50f, NavMesh.AllAreas))
             {
                 // Pick a random creature prefab from the list
                 GameObject creaturePrefab = creaturePrefabs[Random.Range(0, creaturePrefabs.Count)];
@@ -60,6 +60,7 @@ public class StaticCreaturesManager : MonoBehaviour
             allCreatures = new List<BasicCreatureBehaviour>();
         }
         allCreatures.AddRange(creaturesToSpawn);
+        MaxCount = allCreatures.Count;
     }
 
     public void EnableCreatures()
@@ -100,13 +101,16 @@ public class StaticCreaturesManager : MonoBehaviour
             if (allCreatures.Contains(creature))
             {
                 allCreatures.Remove(creature);
-                OnCreatureCaptured?.Invoke(MaxCount - allCreatures.Count, MaxCount);
                 // Then I need to destroy it
                 Destroy(creature.gameObject);
+                OnCreatureCaptured?.Invoke(MaxCount - allCreatures.Count, MaxCount);
             }
-            if (allCreatures.Count == 0)
+
+            if (AreAllCreaturesCaptured)
             {
+                Debug.Log("All creatures captured!");
                 OnAllCreaturesCaptured?.Invoke();
+
             }
         }
     }

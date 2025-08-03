@@ -78,7 +78,7 @@ public class StartingUI : MonoBehaviour
         scoreText.text = "Score: " + score;
     }
 
-    void UpdateCreatureCount(int current, int max)
+    public void UpdateCreatureCount(int current, int max)
     {
         creatureCountText.text = "Creatures: " + current + "/" + max;
     }
