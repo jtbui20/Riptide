@@ -1571,6 +1571,7 @@ MonoBehaviour:
   loopCounterClip: {fileID: 8300000, guid: 9aed6e4bc3b914321825b0c9de306a86, type: 3}
   loopBrokenClip: {fileID: 8300000, guid: 27e2c5965f82e4a5880ca478087b9127, type: 3}
   buttonPressClip: {fileID: 8300000, guid: 6654bc75f9d91431cb8321d6ae615701, type: 3}
+  sfxGroup: {fileID: 4589313443645426020, guid: 2db465afb96e10e48b7d6172f0d9fe04, type: 2}
 --- !u!4 &1287930398
 Transform:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 // ONLY HAVE ONE OF THESE IN THE SCENE
 public class AudioManager : MonoBehaviour
@@ -32,6 +33,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     public AudioClip buttonPressClip;
 
+    [SerializeField]
+    public AudioMixerGroup sfxGroup;
+
     public void TestButtonPress()
     {
         PlayAudioClip(buttonPressClip);
@@ -49,6 +53,7 @@ public class AudioManager : MonoBehaviour
         GameObject audioObject = new GameObject("AudioSource");
         AudioSource audioSource = audioObject.AddComponent<AudioSource>();
         audioSource.clip = clip;
+        audioSource.outputAudioMixerGroup = sfxGroup;
         audioSource.Play();
 
         // dont destroy on load
@@ -70,6 +75,7 @@ public class AudioManager : MonoBehaviour
         AudioSource audioSource = audioObject.AddComponent<AudioSource>();
         audioSource.clip = clip;
         audioSource.pitch = pitch;
+        audioSource.outputAudioMixerGroup = sfxGroup;
         audioSource.Play();
 
         // Destroy the AudioSource object after the clip finishes playing
