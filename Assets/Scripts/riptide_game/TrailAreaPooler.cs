@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,10 +9,20 @@ public class CursorLoopLinePooler : MonoBehaviour
 
     StaticCreaturesManager staticCreaturesManager;
 
+    public int BaseScore = 100;
+    public float ScoreMultiplier = 1.25f; // This means I get an additional 25% score for each other creature I capture in the same line
+    public int ComboChainIncrement = 10;
+
+    public event Action<int> OnScoreAdd;
+    AreaScenarioController areaScenarioController;
+
     void Start()
     {
         staticCreaturesManager = FindAnyObjectByType<StaticCreaturesManager>();
+        areaScenarioController = FindAnyObjectByType<AreaScenarioController>();
     }
+
+    public int comboCount = 0;
 
     void Update()
     {
@@ -42,6 +53,13 @@ public class CursorLoopLinePooler : MonoBehaviour
         }
     }
 
+    public void AddScore(int NumberOfObjects = 1)
+    {
+        int scoreToAdd = Mathf.FloorToInt(BaseScore * NumberOfObjects * (1 + (NumberOfObjects - 1) * ScoreMultiplier)) + (ComboChainIncrement * comboCount);
+        Debug.Log("Adding score: " + scoreToAdd);
+        areaScenarioController.AddScore(scoreToAdd);
+    }
+
     public LineRenderer CreateNewLineRendererInstance()
     {
         LineRenderer newLine = Instantiate(lineRendererPrefab).GetComponent<LineRenderer>();
@@ -56,6 +74,18 @@ public class CursorLoopLinePooler : MonoBehaviour
         if (trailBehaviour != null)
         {
             trailBehaviour.SetConfirmed(isClosed);
+            if (isClosed == true)
+            {
+
+                // Grab the number of objects inside the line
+                int numberOfObjects = trailBehaviour.objectsInside.Count;
+                AddScore(numberOfObjects);
+                comboCount++;
+            }
+            else
+            {
+                comboCount = 0;
+            }
         }
     }
 

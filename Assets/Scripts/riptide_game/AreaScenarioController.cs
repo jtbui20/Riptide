@@ -10,6 +10,7 @@ public class AreaScenarioController : MonoBehaviour
     public StartingUI startingUI;
 
     public IsolatedStopwatch stopwatch;
+    public int currentScore;
 
     void Start()
     {
@@ -44,7 +45,7 @@ public class AreaScenarioController : MonoBehaviour
 
     public void StartCountdown()
     {
-
+        startingUI.DoCountdown();
     }
 
     public void StartGame()
@@ -69,6 +70,14 @@ public class AreaScenarioController : MonoBehaviour
 
     }
 
+    public void SpawnFirstWave()
+    {
+        creatureManager.WaveIndex = 0;
+        creatureManager.SpawnWave();
+        startingUI.UpdateCreatureCount(creatureManager.CreatureCount, creatureManager.MaxCount);
+        creatureManager.DisableCreatures();
+    }
+
     public void SpawnNextWave()
     {
         if (creatureManager.WaveIndex - 1 >= creatureManager.SpawnPattern.Count)
@@ -91,6 +100,12 @@ public class AreaScenarioController : MonoBehaviour
     public void ShowScenarioSummary()
     {
         startingUI.ShowSummaryScreen();
+    }
+
+    public void AddScore(int scoreToAdd)
+    {
+        currentScore += scoreToAdd;
+        startingUI.UpdateScore(currentScore);
     }
 
 

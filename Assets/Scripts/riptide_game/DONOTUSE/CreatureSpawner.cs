@@ -35,7 +35,7 @@ public class CreatureSpawner : MonoBehaviour
         // Find a position on the NavMesh
         Vector3 randomPosition = new Vector3(
             Random.Range(-50f, 50f),
-            0f, // Assuming the ground is at y = 0
+            0.04680252f, // Assuming the ground is at y = 0
             Random.Range(-50f, 50f)
         );
 

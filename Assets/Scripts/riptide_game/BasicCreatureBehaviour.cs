@@ -59,7 +59,7 @@ public class BasicCreatureBehaviour : SelectableObjectBehaviour
         randomDirection += transform.position;
         NavMeshHit hit;
         NavMesh.SamplePosition(randomDirection, out hit, randomLocationRadius, NavMesh.AllAreas);
-        agent.SetDestination(hit.position);
+        agent.SetDestination(hit.position + new Vector3(0, 0.04680252f, 0));
     }
 
     void EvasiveIntention()

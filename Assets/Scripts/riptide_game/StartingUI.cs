@@ -20,9 +20,8 @@ public class StartingUI : MonoBehaviour
 
     public event System.Action onStartGame;
 
-    void Start()
+    public void DoCountdown()
     {
-        StartCoroutine(ShowBatchStart());
         StaticCreaturesManager creatureManager = FindAnyObjectByType<StaticCreaturesManager>();
         if (creatureManager != null)
         {
@@ -74,7 +73,7 @@ public class StartingUI : MonoBehaviour
         timerText.text = "Time: " + Mathf.FloorToInt(time) + "s";
     }
 
-    void UpdateScore(int score)
+    public void UpdateScore(int score)
     {
         scoreText.text = "Score: " + score;
     }
