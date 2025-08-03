@@ -578,6 +578,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRendererPrefab: {fileID: 47417320160151186, guid: e39b34c9a84caf44381b60c9f691528a, type: 3}
+  BaseScore: 100
+  ScoreMultiplier: 1.25
+  ComboChainIncrement: 10
+  comboCount: 0
 --- !u!1 &571163646 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4311124731687052992, guid: 94fbcc571aa5e0447af85bd7fed4f553, type: 3}
@@ -1500,7 +1504,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score:'
+  m_text: 'Score: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98b8e8aaffb8af74c84b39df2ca5d04a, type: 2}
   m_sharedMaterial: {fileID: -2741277175276868646, guid: 98b8e8aaffb8af74c84b39df2ca5d04a, type: 2}
@@ -1715,7 +1719,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Creatures: 3/3'
+  m_text: Creatures
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98b8e8aaffb8af74c84b39df2ca5d04a, type: 2}
   m_sharedMaterial: {fileID: -2741277175276868646, guid: 98b8e8aaffb8af74c84b39df2ca5d04a, type: 2}
@@ -2341,6 +2345,7 @@ MonoBehaviour:
   cursorObject: {fileID: 480494528}
   creatureManager: {fileID: 1147480}
   startingUI: {fileID: 178164895}
+  currentScore: 0
 --- !u!1 &2139321639 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7506980976041647773, guid: 94fbcc571aa5e0447af85bd7fed4f553, type: 3}
