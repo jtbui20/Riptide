@@ -15,6 +15,8 @@ public class StaticCreaturesManager : MonoBehaviour
     public Collider spawnAreaCollider;
 
     public event System.Action<int, int> OnCreatureCaptured;
+    public event System.Action<int> onWaveUpdated;
+
     public event System.Action OnAllCreaturesCaptured;
 
     public int WaveIndex = 0;
@@ -26,6 +28,12 @@ public class StaticCreaturesManager : MonoBehaviour
         // SpawnWave();
         // TryGetAllCreatures();
         // DisableCreatures();
+    }
+
+    public void IncrementWaveIndex()
+    {
+        WaveIndex++;
+        onWaveUpdated.Invoke(WaveIndex);
     }
 
     public void SpawnWave()
