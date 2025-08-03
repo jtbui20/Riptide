@@ -14,7 +14,8 @@ public class StartingUI : MonoBehaviour
     public TextMeshProUGUI creatureCountText;
 
     [Header("Summary UI")]
-    public GameObject summaryPanel;
+    [SerializeField]
+    public SummaryPanel summaryPanel;
     public AudioSource bgm;
 
     public event System.Action onStartGame;
@@ -89,7 +90,9 @@ public class StartingUI : MonoBehaviour
         // scoreText.gameObject.SetActive(false);
         creatureCountText.gameObject.SetActive(false);
 
+        // prefill info into summary screen since we only need to do this once
+
         // Show the summary screen
-        summaryPanel.SetActive(true);
+        summaryPanel.ShowSummary();
     }
 }

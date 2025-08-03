@@ -81,10 +81,15 @@ public class CursorLoopLinePooler : MonoBehaviour
                 int numberOfObjects = trailBehaviour.objectsInside.Count;
                 AddScore(numberOfObjects);
                 comboCount++;
+
+                // max of 20 combo count
+                AudioManager.Instance.PlayAudioClipPitched(AudioManager.Instance.loopCounterClip, 1f + (Mathf.Min(comboCount, 20) * 0.1f));
             }
             else
             {
                 comboCount = 0;
+
+                AudioManager.Instance.PlayAudioClip(AudioManager.Instance.loopBrokenClip);
             }
         }
     }
