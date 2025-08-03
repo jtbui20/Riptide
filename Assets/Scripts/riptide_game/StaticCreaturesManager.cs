@@ -19,7 +19,7 @@ public class StaticCreaturesManager : MonoBehaviour
 
     public int WaveIndex = 0;
 
-    public List<int> SpawnPattern = new List<int> { 1, 1, 2, 2, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7 };
+    public List<int> SpawnPattern = new List<int> { 1, 1, 2, 2, 3, 3, 4 };
     public void Start()
     {
         // TryGetAllCreatures();
