@@ -81,7 +81,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 3
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6070b036313a3c7409897bb436412dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TrailLingeringTime: 1
+  TrailLingeringTime: 0.3
   isSafe: 0
-  shouldRemove: 0
+  shouldProcess: 0
+  objectsInside: []

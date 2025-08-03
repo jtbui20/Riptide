@@ -7,7 +7,7 @@ public class TrailAreaBehaviour : MonoBehaviour
 {
     LineRenderer lineRenderer;
 
-    public float TrailLingeringTime = 1;
+    public float TrailLingeringTime = 0.3f;
 
     public bool isSafe = false;
     public bool shouldProcess = false;
