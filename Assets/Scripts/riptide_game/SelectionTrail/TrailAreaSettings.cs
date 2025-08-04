@@ -13,4 +13,5 @@ public class TrailAreaSettings : ScriptableObject
     public float verticalOffset;
     public bool allowCutLoops = true; // Allow cutting loops at any point
     public LayerMask disrutpableLayers;
+    public float TrailLingeringTime = 0.3f;
 }

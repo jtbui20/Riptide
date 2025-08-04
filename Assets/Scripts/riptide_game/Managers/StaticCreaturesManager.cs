@@ -7,38 +7,33 @@ public class StaticCreaturesManager : MonoBehaviour
 {
     List<BasicCreatureBehaviour> allCreatures;
     [Header("Dump Creatures here")]
-    public List<GameObject> creaturePrefabs;
-    public int CreatureCount => allCreatures.Count;
-    public int MaxCount = 0;
-    public bool AreAllCreaturesCaptured => allCreatures.Count == 0;
 
-    public Collider spawnAreaCollider;
+    [SerializeField]
+    ScenarioConfig scenarioConfig;
+    int CreatureCount => allCreatures.Count;
+    int MaxCount = 0;
+    public bool AreAllCreaturesCaptured => allCreatures.Count == 0;
+    public int NumberOfWaves => scenarioConfig.SpawnPattern.Count;
+
+    [SerializeField]
+    Collider spawnAreaCollider;
+
+    public int WaveIndex { get; private set; } = 0;
 
     public event System.Action<int, int> OnCreatureCaptured;
     public event System.Action<int, int> onWaveUpdated;
 
     public event System.Action OnAllCreaturesCaptured;
 
-    public int WaveIndex = 0;
-
-    public List<int> SpawnPattern = new List<int> { 1, 1, 2, 2, 3, 3, 4 };
-    public void Start()
-    {
-        // TryGetAllCreatures();
-        // SpawnWave();
-        // TryGetAllCreatures();
-        // DisableCreatures();
-    }
-
     public void IncrementWaveIndex()
     {
         WaveIndex++;
-        onWaveUpdated.Invoke(WaveIndex, SpawnPattern.Count);
+        onWaveUpdated?.Invoke(WaveIndex, scenarioConfig.SpawnPattern.Count);
     }
 
     void UpdateInformation()
     {
-        onWaveUpdated?.Invoke(WaveIndex, SpawnPattern.Count);
+        onWaveUpdated?.Invoke(WaveIndex, scenarioConfig.SpawnPattern.Count);
         OnCreatureCaptured?.Invoke(CreatureCount, MaxCount);
     }
 
@@ -46,7 +41,7 @@ public class StaticCreaturesManager : MonoBehaviour
     {
         List<BasicCreatureBehaviour> creaturesToSpawn = new List<BasicCreatureBehaviour>();
         // Select number of creatures based on pattern
-        int numberToSpawn = WaveIndex < SpawnPattern.Count ? SpawnPattern[WaveIndex] : 1;
+        int numberToSpawn = WaveIndex < scenarioConfig.SpawnPattern.Count ? scenarioConfig.SpawnPattern[WaveIndex] : 1;
 
         for (int i = 0; i < numberToSpawn; i++)
         {
@@ -61,7 +56,7 @@ public class StaticCreaturesManager : MonoBehaviour
             if (NavMesh.SamplePosition(randomPosition, out NavMeshHit hit, 50f, NavMesh.AllAreas))
             {
                 // Pick a random creature prefab from the list
-                GameObject creaturePrefab = creaturePrefabs[Random.Range(0, creaturePrefabs.Count)];
+                GameObject creaturePrefab = scenarioConfig.CreaturePrefabs[Random.Range(0, scenarioConfig.CreaturePrefabs.Count)];
                 // Create and initialize the creature
                 BasicCreatureBehaviour newCreature = Instantiate(creaturePrefab, hit.position, Quaternion.identity).GetComponent<BasicCreatureBehaviour>();
                 creaturesToSpawn.Add(newCreature);

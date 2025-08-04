@@ -71,14 +71,13 @@ public class AreaScenarioController : MonoBehaviour
 
     public void SpawnFirstWave()
     {
-        creatureManager.WaveIndex = 0;
         creatureManager.SpawnWave();
         creatureManager.DisableCreatures();
     }
 
     public void SpawnNextWave()
     {
-        if (creatureManager.WaveIndex >= creatureManager.SpawnPattern.Count - 1)
+        if (creatureManager.WaveIndex >= creatureManager.NumberOfWaves - 1)
         {
             FinishScenario_Success();
             return;

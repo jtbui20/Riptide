@@ -163,17 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed01794517631fb4b98736d76f0d5d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creaturePrefabs:
-  - {fileID: 9008022950858930842, guid: 497041596928e4adfbf119b89f5b0e6d, type: 3}
-  - {fileID: 9008022950858930842, guid: 412c4bdd26bb34342adda8e0b786be85, type: 3}
-  - {fileID: 9008022950858930842, guid: 25a55ba8748bc49e4aa3cc512ee72326, type: 3}
-  - {fileID: 9008022950858930842, guid: 649592954a9c24c9e8195c65a8d604ea, type: 3}
-  - {fileID: 9008022950858930842, guid: 36acf743f6a684d73945a6d890817437, type: 3}
-  - {fileID: 9008022950858930842, guid: 126bf1b8166ad4443a541145d6a60c1f, type: 3}
-  MaxCount: 0
+  scenarioConfig: {fileID: 11400000, guid: 85435e405a86f254cb4479f32456b285, type: 2}
   spawnAreaCollider: {fileID: 20048074}
-  WaveIndex: 0
-  SpawnPattern: 0100000001000000020000000200000003000000030000000400000004000000
 --- !u!1 &6929485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,6 +1221,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 585535871}
     m_Modifications:
+    - target: {fileID: 2777667618664557100, guid: ceed938372fe08d4eac6f121630c6fad, type: 3}
+      propertyPath: scoringConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: bebf4ee62a1fca74baa4f7489fac47c0, type: 2}
     - target: {fileID: 3952381700576902810, guid: ceed938372fe08d4eac6f121630c6fad, type: 3}
       propertyPath: m_Name
       value: Cursor
@@ -1771,7 +1766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cursorObject: {fileID: 480494528}
   creatureManager: {fileID: 1147480}
-  startingUI: {fileID: 0}
+  summaryPanel: {fileID: 0}
   currentScore: 0
 --- !u!114 &2111103961
 MonoBehaviour:
@@ -2212,8 +2207,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 582737131}
   - {fileID: 1322423937}
+  - {fileID: 1841918408}
   - {fileID: 178164894}
   - {fileID: 6929486}
-  - {fileID: 1841918408}
   - {fileID: 1818875690}
   - {fileID: 585535871}

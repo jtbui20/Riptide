@@ -1,27 +1,16 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-[Serializable]
-public enum BasicCreatureStates
-{
-    Passive,
-    Evasive,
-    AggressiveTrail,
-    AggressiveVehicle
-}
-
 public class BasicCreatureBehaviour : SelectableObjectBehaviour
 {
-    private GameObject playerTarget;
+
     public bool IsBehaviourEnabled = false;
     NavMeshAgent agent;
-
-    [SerializeField]
     BasicCreatureStates startingState;
     BasicCreatureStates currentState = BasicCreatureStates.Passive;
+    GameObject playerTarget;
 
-    public float randomLocationRadius = 50f;
+    public float randomLocationRadius = 50f; // Need to move this to a configuration setting
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();

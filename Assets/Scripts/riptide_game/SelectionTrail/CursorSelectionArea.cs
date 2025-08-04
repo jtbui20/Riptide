@@ -27,6 +27,7 @@ public class CursorSelectionArea : MonoBehaviour
         mainCamera = Camera.main;
         linePooler = FindAnyObjectByType<CursorLoopLinePooler>();
         rb = GetComponent<Rigidbody>();
+        linePooler.settings = cursorSettings;
     }
 
     public void EnableCursor()

@@ -6,16 +6,21 @@ public class TrailAreaBehaviour : MonoBehaviour
 {
     LineRenderer lineRenderer;
 
-    public float TrailLingeringTime = 0.3f;
-
     public bool isSafe = false;
     public bool shouldProcess = false;
 
     public List<GameObject> objectsInside;
 
+    TrailAreaSettings settings;
+
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
+    }
+
+    public void LoadSettings(TrailAreaSettings settings)
+    {
+        this.settings = settings;
     }
 
     public void SetConfirmed(bool isClosed)
@@ -34,7 +39,8 @@ public class TrailAreaBehaviour : MonoBehaviour
         StartCoroutine(LingeringTimer());
     }
 
-    List<GameObject> FindObjectsInArea()
+    // Move this out I think
+    public List<GameObject> FindObjectsInArea()
     {
         List<GameObject> foundObjects = new List<GameObject>();
         foreach (GameObject selectable in GameObject.FindGameObjectsWithTag("Selectable"))
@@ -83,17 +89,20 @@ public class TrailAreaBehaviour : MonoBehaviour
 
     IEnumerator LingeringTimer()
     {
-        yield return new WaitForSeconds(TrailLingeringTime);
+        // float time = settings.TrailLingeringTime;
+        float time = 0.3f;
+        yield return new WaitForSeconds(time);
         shouldProcess = true;
     }
 
     void Update()
     {
-        if (shouldProcess) HandleObjectMovementAcrossTrail();
+        // if (shouldProcess) HandleObjectMovementAcrossTrail();
     }
 
     void HandleObjectMovementAcrossTrail()
     {
+        // This should be a hitbox check instead.
         List<GameObject> newFrameObjects = FindObjectsInArea();
         // Rare occurance
         if (newFrameObjects.Count == objectsInside.Count) return;
