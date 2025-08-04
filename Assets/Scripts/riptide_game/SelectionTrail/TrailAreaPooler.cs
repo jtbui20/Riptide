@@ -41,10 +41,10 @@ public class CursorLoopLinePooler : MonoBehaviour
                         {
                             staticCreaturesManager.CapturedCreature(creatureBehaviour);
                         }
-                        else if (obj.TryGetComponent(out JeepMovementLogic vehicleBehaviour))
-                        {
-                            // Do something with the vehicle
-                        }
+                        // else if (obj.TryGetComponent(out JeepMovementLogic vehicleBehaviour))
+                        // {
+                        //     // Do something with the vehicle
+                        // }
                     }
                 }
                 Debug.Log("Collected " + line.objectsInside.Count + " objects inside the trail area.");
