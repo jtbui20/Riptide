@@ -1,10 +1,8 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AreaScenarioController : MonoBehaviour
 {
     // This is the class that the timeline will be calling stuff to
-    public JeepMovementLogic jeepObject;
     public CursorSelectionArea cursorObject;
     public StaticCreaturesManager creatureManager;
     public StartingUI startingUI;
