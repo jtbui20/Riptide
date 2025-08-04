@@ -5,6 +5,8 @@ public class IsolatedStopwatch
     public bool isRunning { get; private set; }
     public bool isPaused { get; private set; }
 
+    public event System.Action<float> OnTick;
+
     public void Start()
     {
         if (isRunning) return;
@@ -42,6 +44,7 @@ public class IsolatedStopwatch
         if (isRunning && !isPaused)
         {
             elapsedTime += deltaTime;
+            OnTick?.Invoke(elapsedTime);
         }
     }
 

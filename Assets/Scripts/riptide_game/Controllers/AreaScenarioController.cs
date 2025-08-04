@@ -5,14 +5,15 @@ public class AreaScenarioController : MonoBehaviour
     // This is the class that the timeline will be calling stuff to
     public CursorSelectionArea cursorObject;
     public StaticCreaturesManager creatureManager;
-    public StartingUI startingUI;
+    public SummaryPanel summaryPanel;
 
     public IsolatedStopwatch stopwatch;
     public int currentScore;
 
+    public event System.Action<int> OnScoreAdd;
+
     void Start()
     {
-        startingUI.onStartGame += StartGame;
         creatureManager.OnAllCreaturesCaptured += SpawnNextWave;
         stopwatch = new();
     }
@@ -22,7 +23,6 @@ public class AreaScenarioController : MonoBehaviour
         if (stopwatch.isRunning)
         {
             stopwatch.DoTick(Time.deltaTime);
-            startingUI.UpdateTimer(stopwatch.GetTimeElapsed());
         }
     }
 
@@ -43,7 +43,7 @@ public class AreaScenarioController : MonoBehaviour
 
     public void StartCountdown()
     {
-        startingUI.DoCountdown();
+        // This is now handled by the timeline
     }
 
     public void StartGame()
@@ -52,7 +52,8 @@ public class AreaScenarioController : MonoBehaviour
 
         creatureManager.EnableCreatures();
 
-        startingUI.UpdateCreatureCount(creatureManager.CreatureCount, creatureManager.MaxCount);
+        // Event hook will now make this happen
+        // startingUI.UpdateCreatureCount(creatureManager.CreatureCount, creatureManager.MaxCount);
 
         // Turn on the stop watch
         stopwatch.Start();
@@ -72,8 +73,6 @@ public class AreaScenarioController : MonoBehaviour
     {
         creatureManager.WaveIndex = 0;
         creatureManager.SpawnWave();
-        startingUI.UpdateCreatureCount(creatureManager.CreatureCount, creatureManager.MaxCount);
-        startingUI.UpdateWaveCount(creatureManager.WaveIndex, creatureManager.SpawnPattern.Count);
         creatureManager.DisableCreatures();
     }
 
@@ -86,7 +85,6 @@ public class AreaScenarioController : MonoBehaviour
         }
         creatureManager.IncrementWaveIndex();
         creatureManager.SpawnWave();
-        startingUI.UpdateCreatureCount(creatureManager.CreatureCount, creatureManager.MaxCount);
         creatureManager.EnableCreatures();
     }
 
@@ -98,13 +96,13 @@ public class AreaScenarioController : MonoBehaviour
 
     public void ShowScenarioSummary()
     {
-        startingUI.ShowSummaryScreen();
+        summaryPanel.ShowSummary();
     }
 
     public void AddScore(int scoreToAdd)
     {
         currentScore += scoreToAdd;
-        startingUI.UpdateScore(currentScore);
+        OnScoreAdd?.Invoke(currentScore);
     }
 
 

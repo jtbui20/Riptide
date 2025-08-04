@@ -36,6 +36,12 @@ public class StaticCreaturesManager : MonoBehaviour
         onWaveUpdated.Invoke(WaveIndex, SpawnPattern.Count);
     }
 
+    void UpdateInformation()
+    {
+        onWaveUpdated?.Invoke(WaveIndex, SpawnPattern.Count);
+        OnCreatureCaptured?.Invoke(CreatureCount, MaxCount);
+    }
+
     public void SpawnWave()
     {
         List<BasicCreatureBehaviour> creaturesToSpawn = new List<BasicCreatureBehaviour>();
@@ -69,6 +75,7 @@ public class StaticCreaturesManager : MonoBehaviour
         }
         allCreatures.AddRange(creaturesToSpawn);
         MaxCount = allCreatures.Count;
+        UpdateInformation();
     }
 
     public void EnableCreatures()
@@ -77,6 +84,7 @@ public class StaticCreaturesManager : MonoBehaviour
         {
             creature.IsBehaviourEnabled = true;
         }
+        UpdateInformation();
     }
 
     public void DisableCreatures()

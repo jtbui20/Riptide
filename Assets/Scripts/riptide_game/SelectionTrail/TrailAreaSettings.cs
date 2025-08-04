@@ -12,6 +12,5 @@ public class TrailAreaSettings : ScriptableObject
     public int minimumDistanceToCloseLoop = 2; // Minimum distance to close the loop
     public float verticalOffset;
     public bool allowCutLoops = true; // Allow cutting loops at any point
-
     public LayerMask disrutpableLayers;
 }

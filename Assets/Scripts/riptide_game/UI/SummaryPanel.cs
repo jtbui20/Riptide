@@ -8,10 +8,21 @@ public class SummaryPanel : MonoBehaviour
     public TextMeshProUGUI finalScoreText;
     public TextMeshProUGUI finalTimeText;
 
-    [SerializeField]
-    private AreaScenarioController areaScenarioController;
+    AreaScenarioController areaScenarioController;
+
+    void Start()
+    {
+        areaScenarioController = FindAnyObjectByType<AreaScenarioController>();
+    }
 
     public void ShowSummary()
+    {
+        PopulateInformation();
+
+        gameObject.SetActive(true);
+    }
+
+    void PopulateInformation()
     {
         float finalTime = areaScenarioController.stopwatch.GetTimeElapsed();
         int timeSeconds = Mathf.FloorToInt(finalTime);
@@ -20,8 +31,5 @@ public class SummaryPanel : MonoBehaviour
         // Update the final score and time text
         finalTimeText.text = $"Time: {timeSeconds}.{(int)(msFraction * 100)} seconds";
         finalScoreText.text = $"Score: {areaScenarioController.currentScore}";
-
-        // Activate the summary panel
-        gameObject.SetActive(true);
     }
 }
