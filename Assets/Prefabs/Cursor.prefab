@@ -14,13 +14,14 @@ GameObject:
   - component: {fileID: 2268768333416237880}
   - component: {fileID: 6019040822759971139}
   - component: {fileID: 930430727394226367}
+  - component: {fileID: 2777667618664557100}
   m_Layer: 0
   m_Name: Cursor
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_StaticEditorFlags: 1
+  m_IsActive: 0
 --- !u!4 &5431887067097023340
 Transform:
   m_ObjectHideFlags: 0
@@ -43,7 +44,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3952381700576902810}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4575378312840820631, guid: e32135c98312bb548a2baddc73af08ee, type: 3}
 --- !u!23 &8768096502118806826
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -67,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: -3365575825888009798, guid: e32135c98312bb548a2baddc73af08ee, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,12 +105,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 6, y: 6, z: 6}
+  m_Center: {x: 0, y: -4.25, z: 0}
 --- !u!114 &6019040822759971139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,8 +124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursorSettings: {fileID: 11400000, guid: ac5fd3384d62ddc4382fdc4ea1c8b3b9, type: 2}
-  cursorObject: {fileID: 3952381700576902810}
   lineRendererPrefab: {fileID: 47417320160151186, guid: e39b34c9a84caf44381b60c9f691528a, type: 3}
+  isCursorEnabled: 0
 --- !u!54 &930430727394226367
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -150,5 +151,22 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &2777667618664557100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3952381700576902810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe1d2ad4d111f24ba08c033a69cc771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRendererPrefab: {fileID: 47417320160151186, guid: e39b34c9a84caf44381b60c9f691528a, type: 3}
+  BaseScore: 100
+  ScoreMultiplier: 1.25
+  ComboChainIncrement: 10
+  comboCount: 0
